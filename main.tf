@@ -14,13 +14,18 @@ terraform {
     }
 }
 
+variable "imagebuild" {
+    type = string
+    description = "Latest Image Build"
+}
+
 resource "azurerm_resource_group" "tf_test" {
     name = "devopstest"
     location = "Central US"
 }
 
 resource "azurerm_container_group" "tfcg_test" {
-    name                = "weatherapi2"
+    name                = "weatherapi"
     location            = azurerm_resource_group.tf_test.location
     resource_group_name = azurerm_resource_group.tf_test.name
 
@@ -29,8 +34,8 @@ resource "azurerm_container_group" "tfcg_test" {
     os_type  = "Linux"
 
     container {
-        name = "weatherapi2"
-        image = "ryonley/weatherapi4:latest"
+        name = "weatherapi"
+        image = "ryonley/weatherapi:${var.imagebuild}"
             cpu = "1"
             memory = "1"
 
