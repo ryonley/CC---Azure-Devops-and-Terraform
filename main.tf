@@ -4,6 +4,16 @@ provider "azurerm" {
     skip_provider_registration = true
 }
 
+terraform {
+    backend "azurerm" {
+        resource_group_name = "tf_rg_blobstore"
+        storage_account_name = "tfstorageaccountryonley"
+        container_name = "tfstate"
+        key  = "terraform.tfstate"
+
+    }
+}
+
 resource "azurerm_resource_group" "tf_test" {
     name = "devopstest"
     location = "Central US"
@@ -20,7 +30,7 @@ resource "azurerm_container_group" "tfcg_test" {
 
     container {
         name = "weatherapi2"
-        image = "ryonley/weatherapi3:latest"
+        image = "ryonley/weatherapi4:latest"
             cpu = "1"
             memory = "1"
 
